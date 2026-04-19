@@ -309,7 +309,12 @@ const translations = {
     }
 };
 
-const galleryImages = Array.from(document.querySelectorAll('img[data-gallery="portfolio"]'));
+const galleryImages = (() => {
+    const all = Array.from(document.querySelectorAll('img[data-gallery="portfolio"]'));
+    const priority = all.filter((img) => img.hasAttribute('data-gallery-priority'));
+    const rest = all.filter((img) => !img.hasAttribute('data-gallery-priority'));
+    return [...priority, ...rest];
+})();
 const lightbox = document.getElementById('lightbox');
 const lightboxImage = document.getElementById('lightboxImage');
 const lightboxClose = document.querySelector('.lightbox-close');
